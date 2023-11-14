@@ -22,9 +22,12 @@ type_of_frequency = [
 ];
 
 
-%% 读取数据
-input_file_path = "D:\0DataCollect\Drones\";    % 文件读取路径
+%% 读取数据，并绘制 stft 图像
+% 数据读取路径
+input_file_path = "D:\0DataCollect\Drones\";
 for i = 1 : length(type_of_uav)
+    % 文件保存路径
+    output_file_path = "D:\0DataCollect\Drones\figure\";
     for j = 1 : length(type_of_distance)
         for k = 1 : length(type_of_frequency)
             
@@ -44,12 +47,33 @@ for i = 1 : length(type_of_uav)
                 time_duration = 0.1; % 每个片段的时间长度为0.1s
                 slice_point = fs * time_duration; % 每个片段的点数
                 stft_point = 2048;   % stft点数为2048
-                output_file_path = "D:\0DataCollect\Drones\figure\";    % 文件保存路径
+                
                 % 绘制 data_rf0_i 的 stft 图像
                 for ii = 1 : floor(length(data_rf0_i)/slice_point)
                     stft(data_rf0_i((ii-1)*slice_point+1 : ii*slice_point), fs, ...
                         'Window', hamming(stft_point), 'FFTLength', stft_point);
                     saveas(gcf, output_file_path + input_file_name + "data_rf0_i" + num2str(ii) + ".jpg")
+                end
+                
+                % 绘制 data_rf0_q 的 stft 图像
+                for ii = 1 : floor(length(data_rf0_q)/slice_point)
+                    stft(data_rf0_q((ii-1)*slice_point+1 : ii*slice_point), fs, ...
+                        'Window', hamming(stft_point), 'FFTLength', stft_point);
+                    saveas(gcf, output_file_path + input_file_name + "data_rf0_q" + num2str(ii) + ".jpg")
+                end
+                
+                % 绘制 data_rf1_i 的 stft 图像
+                for ii = 1 : floor(length(data_rf1_i)/slice_point)
+                    stft(data_rf1_i((ii-1)*slice_point+1 : ii*slice_point), fs, ...
+                        'Window', hamming(stft_point), 'FFTLength', stft_point);
+                    saveas(gcf, output_file_path + input_file_name + "data_rf1_i" + num2str(ii) + ".jpg")
+                end
+                
+                % 绘制 data_rf1_q 的 stft 图像
+                for ii = 1 : floor(length(data_rf1_q)/slice_point)
+                    stft(data_rf1_q((ii-1)*slice_point+1 : ii*slice_point), fs, ...
+                        'Window', hamming(stft_point), 'FFTLength', stft_point);
+                    saveas(gcf, output_file_path + input_file_name + "data_rf1_q" + num2str(ii) + ".jpg")
                 end
             end
         end
